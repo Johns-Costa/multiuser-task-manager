@@ -58,6 +58,26 @@ def mark_complete(worksheet):
     except ValueError:
         print("Invalid input. Please enter a valid task number.")
 
+def delete_task(worksheet):
+    """
+    Delete a task from the worksheet
+    """
+    display_tasks(worksheet)
+    all_values = worksheet.get_all_values()
+    choice = input("Enter the task number to delete: ")
+    try:
+        index = int(choice) - 1
+        if 0 <= index < len(all_values):
+            deleted_task = all_values.pop(index + 1)
+            worksheet.clear()
+            if all_values:
+                worksheet.insert_rows(all_values)
+            print(f"Task '{deleted_task[0]}' deleted.")
+        else:
+            print("Invalid task number.")
+    except ValueError:
+        print("Invalid input. Please enter a valid task number.")
+
 def main():
     while True:
         print("\nTask Manager Menu:")
