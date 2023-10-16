@@ -68,7 +68,7 @@ def delete_task(worksheet):
     try:
         index = int(choice) - 1
         if 0 <= index < len(all_values):
-            deleted_task = all_values.pop(index + 1)
+            deleted_task = all_values.pop(index + 2)
             worksheet.clear()
             if all_values:
                 worksheet.insert_rows(all_values)
