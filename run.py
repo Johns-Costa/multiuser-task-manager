@@ -40,7 +40,23 @@ def add_task(user):
     worksheet_to_update.append_row(data)
     print(f"Task '{name}' added.")
 
-
+def mark_complete(worksheet):
+    """
+    Mark a task as complete
+    """
+    display_tasks(worksheet)
+    all_values = worksheet.get_all_values()
+    choice = input("Enter the task number to mark as complete: ")
+    try:
+        index = int(choice) - 1
+        if 0 <= index < len(all_values):
+            row = index + 3
+            worksheet.update_cell(row, 2, 'Done')
+            print("Task marked as complete.")
+        else:
+            print("Invalid task number.")
+    except ValueError:
+        print("Invalid input. Please enter a valid task number.")
 
 def main():
     while True:
