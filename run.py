@@ -78,6 +78,23 @@ def delete_task(worksheet):
     except ValueError:
         print("Invalid input. Please enter a valid task number.")
 
+def initial_input():
+    """
+    Main menu for the task manager
+    """
+
+    while True:
+        user = input("Please enter your name: ")
+
+        if user != '':
+            print(user)
+            break
+            
+        else:
+            print('Enter at least a single character to continue.')
+            continue
+    return user
+
 def main():
     while True:
         print("\nTask Manager Menu:")
