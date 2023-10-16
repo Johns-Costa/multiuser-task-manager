@@ -96,6 +96,46 @@ def initial_input():
     return user
 
 def main():
+
+    print("\nWelcome to Task Manager!\n")
+    user = initial_input()
+    try:
+        worksheet = SHEET.worksheet(user)
+        password = ()
+        password_value = worksheet.acell('B1').value
+
+        while password != password_value:
+            password = input("Please enter your password: ")
+
+            if password != password_value: 
+                print("Wrong password. Try again") 
+                
+            if password == password_value:
+                print("Correct password!")
+                break    
+               
+    except:
+        while True:
+            forgot_user = input("Unknown user name. Forgot your user name? (y/n): ")
+            if forgot_user == "y":
+                pprint(SHEET.worksheets(''))
+                back = input("Press enter to go back to the login screen.")
+                initial_input()
+                break       
+            elif forgot_user == "n":
+                print("User not found")
+                print("Creating new user...")
+                SHEET.add_worksheet(user, 100, 100)
+                worksheet = SHEET.worksheet(user)
+                new_password = input("Please enter a password: ")
+                worksheet.append_row(['Password:', new_password])
+                worksheet.append_row(['Task Name', 'Status'],)
+                worksheet.format('A2:B2', {'textFormat': {'bold': True}})
+                worksheet.freeze('2')
+                break
+            else:
+                print("Invalid input. Please enter 'y' or 'n'.")
+    
     while True:
         print("\nTask Manager Menu:")
         print("\n1. Display Tasks")
