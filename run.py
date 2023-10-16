@@ -29,6 +29,18 @@ def display_tasks(worksheet):
             name, status = row
             print(f"{i}. {name} ({status})")
 
+def add_task(user):
+    """
+    Add a new task to the worksheet
+    """
+    name = input("Enter task name: ")
+    status = "Not Done"
+    data = [name, status]
+    worksheet_to_update = SHEET.worksheet(user)
+    worksheet_to_update.append_row(data)
+    print(f"Task '{name}' added.")
+
+
 
 def main():
     while True:
