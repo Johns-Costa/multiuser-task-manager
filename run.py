@@ -94,11 +94,13 @@ def initial_input():
             print('Enter at least a single character to continue.')
             continue
 
-
-def main():
-
-    print("\nWelcome to Task Manager!\n")
-    user = initial_input()
+def check_user(user):
+    """
+    Check if the user exists in the spreadsheet
+    If not, create a new user
+    Check if the password is correct
+    If new user, create a password   
+    """
     try:
         worksheet = SHEET.worksheet(user)
         password = ()
@@ -113,7 +115,7 @@ def main():
             if password == password_value:
                 print("Correct password!")
                 break    
-               
+            
     except:
         while True:
             forgot_user = input("Unknown user name. Forgot your user name? (y/n): ")
@@ -147,7 +149,12 @@ def main():
                 break
             else:
                 print("Invalid input. Please enter 'y' or 'n'.")
-    
+
+
+def menu(user):
+    """
+    Display the menu and call the appropriate function
+    """
     while True:
         print("\nTask Manager Menu:")
         print("\n1. Display Tasks")
@@ -172,4 +179,13 @@ def main():
         else:
             print("Invalid choice. Please choose a valid option.")
 
+
+def main():
+
+    print("\nWelcome to Task Manager!\n")
+    user = initial_input()
+    check_user(user)
+    menu(user)
+   
+   
 main()
