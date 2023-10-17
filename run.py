@@ -87,13 +87,13 @@ def initial_input():
         user = input("Please enter your name: ")
 
         if user != '':
-            print(user)
-            break
+            return user
+
             
         else:
             print('Enter at least a single character to continue.')
             continue
-    return user
+
 
 def main():
 
@@ -118,20 +118,32 @@ def main():
         while True:
             forgot_user = input("Unknown user name. Forgot your user name? (y/n): ")
             if forgot_user == "y":
-                pprint(SHEET.worksheets(''))
+                for num in range(len(SHEET.worksheets())):
+                    all_users = SHEET.get_worksheet(num)
+                    pprint(all_users.title)
                 back = input("Press enter to go back to the login screen.")
-                initial_input()
+                back
+                main()
                 break       
             elif forgot_user == "n":
                 print("User not found")
                 print("Creating new user...")
                 SHEET.add_worksheet(user, 100, 100)
                 worksheet = SHEET.worksheet(user)
-                new_password = input("Please enter a password: ")
-                worksheet.append_row(['Password:', new_password])
-                worksheet.append_row(['Task Name', 'Status'],)
-                worksheet.format('A2:B2', {'textFormat': {'bold': True}})
-                worksheet.freeze('2')
+                
+                while True:
+                    new_password = input("Please enter a password: ")
+                    if new_password != '':
+                        worksheet.append_row(['Password:', new_password])
+                        worksheet.append_row(['Task Name', 'Status'],)
+                        worksheet.format('A2:B2', {'textFormat': {'bold': True}})
+                        worksheet.freeze('2')
+                        break
+                        
+                    else:
+                        print('Enter at least a single character to continue.')
+                        continue
+
                 break
             else:
                 print("Invalid input. Please enter 'y' or 'n'.")
