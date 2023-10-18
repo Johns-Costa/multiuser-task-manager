@@ -2,6 +2,7 @@ import gspread
 import os
 from google.oauth2.service_account import Credentials
 from pprint import pprint
+import keyboard
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -20,30 +21,36 @@ def display_tasks(worksheet):
     """
     all_values = worksheet.get_all_values()
     first_task = worksheet.row_values(3)
-
+    clear() 
     if not first_task:
         print("\nNo tasks found.")
     else:
         print("\nTask List:\n")
-        for i, row in enumerate(all_values[2:], start=1):  # Skip the header row
+        for i, row in enumerate(all_values[2:], start=1):
             name, status = row
             print(f"{i}. {name} ({status})")
+    
 
 def add_task(user):
     """
     Add a new task to the worksheet
     """
-    name = input("Enter task name: ")
-    status = "Not Done"
-    data = [name, status]
-    worksheet_to_update = SHEET.worksheet(user)
-    worksheet_to_update.append_row(data)
-    print(f"Task '{name}' added.")
+    name = input("Enter task name: \n(Type 'exit' to go back to the menu.)")
+    if "exit":
+        menu(user)
+        clear()
+    else:
+        status = "Not Done"
+        data = [name, status]
+        worksheet_to_update = SHEET.worksheet(user)
+        worksheet_to_update.append_row(data)
+        print(f"Task '{name}' added.")
 
 def mark_complete(worksheet):
     """
     Mark a task as complete
     """
+    clear() 
     display_tasks(worksheet)
     all_values = worksheet.get_all_values()
     choice = input("Enter the task number to mark as complete: ")
@@ -62,6 +69,7 @@ def delete_task(worksheet):
     """
     Delete a task from the worksheet
     """
+    clear() 
     display_tasks(worksheet)
     all_values = worksheet.get_all_values()
     choice = input("Enter the task number to delete: ")
@@ -80,7 +88,7 @@ def delete_task(worksheet):
 
 def initial_input():
     """
-    Main menu for the task manager
+    Main menu for the Task Manager
     """
 
     while True:
@@ -118,13 +126,14 @@ def check_user(user):
             
     except:
         while True:
-            forgot_user = input("Unknown user name. Forgot your user name? (y/n): ")
+            forgot_user = input("Unknown user name.\n\nDo you have a user name?\n       or\nForgot your user name? (y/n): ")
             if forgot_user == "y":
+                clear()
+                print("User name list:\n")
                 for num in range(len(SHEET.worksheets())):
-                    all_users = SHEET.get_worksheet(num)
+                    all_users = SHEET.get_worksheet(num)  
                     pprint(all_users.title)
-                back = input("Press enter to go back to the login screen.")
-                back
+                input("Press Enter to go back to the main menu.")
                 main()
                 break       
             elif forgot_user == "n":
@@ -136,6 +145,7 @@ def check_user(user):
                 while True:
                     new_password = input("Please enter a password: ")
                     if new_password != '':
+                        print("Password accepted!\nNew user created!") 
                         worksheet.append_row(['Password:', new_password])
                         worksheet.append_row(['Task Name', 'Status'],)
                         worksheet.format('A2:B2', {'textFormat': {'bold': True}})
@@ -174,13 +184,23 @@ def menu(user):
         elif choice == "4":
             delete_task(worksheet)
         elif choice == "5":
-            print("\nGoodbye!!!\n")
-            break
+            clear()
+            print("\nThank you for using the Task Manager!\n\nGoodbye!!!\n")
+            exit()
         else:
             print("Invalid choice. Please choose a valid option.")
 
+def clear():
+    """
+    This clears the terminal to prevent clutter on it.
+    """
+    os.system('cls' if os.name=='nt' else 'clear')
+    
 
 def main():
+    """
+    Run all program functions
+    """
 
     print("\nWelcome to Task Manager!\n")
     user = initial_input()
