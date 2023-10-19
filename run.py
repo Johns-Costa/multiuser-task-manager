@@ -2,7 +2,8 @@ import gspread
 import os
 from google.oauth2.service_account import Credentials
 from pprint import pprint
-import keyboard
+from simple_term_menu import TerminalMenu
+import time
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -35,10 +36,11 @@ def add_task(user):
     """
     Add a new task to the worksheet
     """
-    name = input("Enter task name: \n(Type 'exit' to go back to the menu.)")
+    print("Note: type 'exit' to go back to the menu")
+    name = input("\nEnter task name: ")  
     if "exit":
-        menu(user)
         clear()
+        menu(user) 
     else:
         status = "Not Done"
         data = [name, status]
@@ -46,45 +48,63 @@ def add_task(user):
         worksheet_to_update.append_row(data)
         print(f"Task '{name}' added.")
 
-def mark_complete(worksheet):
+def mark_complete(worksheet, user):
     """
     Mark a task as complete
     """
     clear() 
     display_tasks(worksheet)
     all_values = worksheet.get_all_values()
+    print("\nNote: type 'exit' to go back to the menu")
     choice = input("Enter the task number to mark as complete: ")
-    try:
-        index = int(choice) - 1
-        if 0 <= index < len(all_values):
-            row = index + 3
-            worksheet.update_cell(row, 2, 'Done')
-            print("Task marked as complete.")
-        else:
-            print("Invalid task number.")
-    except ValueError:
-        print("Invalid input. Please enter a valid task number.")
+    if choice == "exit":
+        clear()
+        menu(user)
+    else:
+        try:
+            index = int(choice) - 1
+            if 0 <= index > len(all_values):
+                row = index + 3
+                worksheet.update_cell(row, 2, 'Done')
+                print("Task marked as complete.")
+            else:
+                print("Invalid task number.")
+                time.sleep(1) 
+                mark_complete(worksheet, user)
+        except ValueError:
+            print("Invalid input. Please enter a valid task number.")
+            time.sleep(1) 
+            mark_complete(worksheet, user)
 
-def delete_task(worksheet):
+def delete_task(worksheet, user):
     """
     Delete a task from the worksheet
     """
     clear() 
     display_tasks(worksheet)
     all_values = worksheet.get_all_values()
+    print("\nNote: type 'exit' to go back to the menu")
     choice = input("Enter the task number to delete: ")
-    try:
-        index = int(choice) - 1
-        if 0 <= index < len(all_values):
-            deleted_task = all_values.pop(index + 2)
-            worksheet.clear()
-            if all_values:
-                worksheet.insert_rows(all_values)
-            print(f"Task '{deleted_task[0]}' deleted.")
-        else:
-            print("Invalid task number.")
-    except ValueError:
-        print("Invalid input. Please enter a valid task number.")
+    if choice == "exit":
+        clear()
+        menu(user)       
+    else:
+        try:
+            index = int(choice) - 1
+            if 0 <= index < (len(all_values)-2):
+                deleted_task = all_values.pop(index + 2)
+                worksheet.clear()
+                if all_values:
+                    worksheet.insert_rows(all_values)
+                print(f"Task '{deleted_task[0]}' deleted.")
+            else:
+                print("Invalid task number.")
+                time.sleep(1)
+                delete_task(worksheet, user)
+        except ValueError:
+            print("Invalid input. Please enter a valid task number.")
+            time.sleep(1)
+            delete_task(worksheet, user)
 
 def initial_input():
     """
@@ -166,24 +186,21 @@ def menu(user):
     Display the menu and call the appropriate function
     """
     while True:
-        print("\nTask Manager Menu:")
-        print("\n1. Display Tasks")
-        print("2. Add Task")
-        print("3. Mark Task as Complete")
-        print("4. Delete Task")
-        print("5. Quit")
+        
+        options = ["1. Display Tasks", "2. Add Task", "3. Mark Task as Complete", "4. Delete Task", "5. Quit"]
+        terminal_menu = TerminalMenu(options, title= "\nEnter your choice:\n")
+        menu_entry_index = terminal_menu.show()
 
-        choice = input("\n   Enter your choice: ")
         worksheet = SHEET.worksheet(user)
-        if choice == "1":
+        if options[menu_entry_index] == "1. Display Tasks":
             display_tasks(worksheet)
-        elif choice == "2":
+        elif options[menu_entry_index] == "2. Add Task":
             add_task(user)
-        elif choice == "3":
-            mark_complete(worksheet)
-        elif choice == "4":
-            delete_task(worksheet)
-        elif choice == "5":
+        elif options[menu_entry_index] == "3. Mark Task as Complete":
+            mark_complete(worksheet, user)
+        elif options[menu_entry_index] == "4. Delete Task":
+            delete_task(worksheet, user)
+        elif options[menu_entry_index] == "5. Quit":
             clear()
             print("\nThank you for using the Task Manager!\n\nGoodbye!!!\n")
             exit()
@@ -195,7 +212,7 @@ def clear():
     This clears the terminal to prevent clutter on it.
     """
     os.system('cls' if os.name=='nt' else 'clear')
-    
+
 
 def main():
     """
