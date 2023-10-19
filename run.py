@@ -230,7 +230,6 @@ def main():
     """
     Run all program functions
     """
-    clear()
     print(term.black_on_cyan_bold("\nWelcome to Task Manager!\n"))
     user = initial_input()
     check_user(user)
