@@ -4,6 +4,8 @@ from google.oauth2.service_account import Credentials
 from pprint import pprint
 from simple_term_menu import TerminalMenu
 import time
+from blessed import Terminal
+
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -16,6 +18,8 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('task-manager')
 
+term = Terminal()
+
 def display_tasks(worksheet):
     """ 
     Get all values from the  chosen worksheet
@@ -24,20 +28,20 @@ def display_tasks(worksheet):
     first_task = worksheet.row_values(3)
     clear() 
     if not first_task:
-        print("\nNo tasks found.")
+        print(term.black_on_yellow("\nNo tasks found."))
     else:
-        print("\nTask List:\n")
+        print(term.cyan("\nTask List:\n"))
         for i, row in enumerate(all_values[2:], start=1):
             name, status = row
-            print(f"{i}. {name} ({status})")
+            print(term.cyan(f"{i}. {name} ({status})"))
     
 
 def add_task(user):
     """
     Add a new task to the worksheet
     """
-    print("Note: type 'exit' to go back to the menu")
-    name = input("\nEnter task name: ")  
+    print(term.black_on_darkkhaki(term.center("Note: type 'exit' to go back to the menu")))
+    name = input(term.cyan("\nEnter task name: "))
     if "exit":
         clear()
         menu(user) 
@@ -55,8 +59,8 @@ def mark_complete(worksheet, user):
     clear() 
     display_tasks(worksheet)
     all_values = worksheet.get_all_values()
-    print("\nNote: type 'exit' to go back to the menu")
-    choice = input("Enter the task number to mark as complete: ")
+    print(term.black_on_darkkhaki(term.center("Note: type 'exit' to go back to the menu")))
+    choice = input(term.cyan("Enter the task number to mark as complete: "))
     if choice == "exit":
         clear()
         menu(user)
@@ -66,13 +70,13 @@ def mark_complete(worksheet, user):
             if 0 <= index > len(all_values):
                 row = index + 3
                 worksheet.update_cell(row, 2, 'Done')
-                print("Task marked as complete.")
+                print(term.white_on_green("Task marked as complete."))
             else:
-                print("Invalid task number.")
+                print(term.red("Invalid task number."))
                 time.sleep(1) 
                 mark_complete(worksheet, user)
         except ValueError:
-            print("Invalid input. Please enter a valid task number.")
+            print(term.red("Invalid input. Please enter a valid task number."))
             time.sleep(1) 
             mark_complete(worksheet, user)
 
@@ -83,8 +87,8 @@ def delete_task(worksheet, user):
     clear() 
     display_tasks(worksheet)
     all_values = worksheet.get_all_values()
-    print("\nNote: type 'exit' to go back to the menu")
-    choice = input("Enter the task number to delete: ")
+    print(term.black_on_darkkhaki(term.center("Note: type 'exit' to go back to the menu")))
+    choice = input(term.cyan("Enter the task number to delete: "))
     if choice == "exit":
         clear()
         menu(user)       
@@ -96,13 +100,13 @@ def delete_task(worksheet, user):
                 worksheet.clear()
                 if all_values:
                     worksheet.insert_rows(all_values)
-                print(f"Task '{deleted_task[0]}' deleted.")
+                print(term.white_on_green(f"Task '{deleted_task[0]}' deleted."))
             else:
-                print("Invalid task number.")
+                print(term.red("Invalid task number."))
                 time.sleep(1)
                 delete_task(worksheet, user)
         except ValueError:
-            print("Invalid input. Please enter a valid task number.")
+            print(term.red("Invalid input. Please enter a valid task number."))
             time.sleep(1)
             delete_task(worksheet, user)
 
@@ -112,14 +116,14 @@ def initial_input():
     """
 
     while True:
-        user = input("Please enter your name: ")
+        user = input(term.cyan("Please enter your name: "))
 
         if user != '':
             return user
 
             
         else:
-            print('Enter at least a single character to continue.')
+            print(term.red('Enter at least a single character to continue.'))
             continue
 
 def check_user(user):
@@ -135,37 +139,43 @@ def check_user(user):
         password_value = worksheet.acell('B1').value
 
         while password != password_value:
-            password = input("Please enter your password: ")
+            password = input(term.cyan("Please enter your password: "))
 
             if password != password_value: 
-                print("Wrong password. Try again") 
+                print(term.black_on_red("Wrong password. Try again"))
                 
             if password == password_value:
-                print("Correct password!")
+                print(term.black_on_green("Correct password!"))
+                print("\n")
                 break    
             
     except:
         while True:
-            forgot_user = input("Unknown user name.\n\nDo you have a user name?\n       or\nForgot your user name? (y/n): ")
+            forgot_user = input(term.white_on_cyan("Unknown user name.\n\nDo you have a user name?\n       or\nForgot your user name? (y/n): "))
             if forgot_user == "y":
                 clear()
-                print("User name list:\n")
+                print(term.cadetblue1("User name list:\n"))
                 for num in range(len(SHEET.worksheets())):
                     all_users = SHEET.get_worksheet(num)  
-                    pprint(all_users.title)
-                input("Press Enter to go back to the main menu.")
+                    print(term.cadetblue1('* ', all_users.title))
+                print("\n")
+                print(term.black_on_darkkhaki(term.center('press any key to continue.')))
+                with term.cbreak(), term.hidden_cursor():
+                    inp = term.inkey()
+                if inp == term.KEY_ESCAPE:
+                    continue
+
                 main()
                 break       
             elif forgot_user == "n":
-                print("User not found")
-                print("Creating new user...")
+                print(term.cyan("Creating new user..."))
                 SHEET.add_worksheet(user, 100, 100)
                 worksheet = SHEET.worksheet(user)
                 
                 while True:
-                    new_password = input("Please enter a password: ")
+                    new_password = input(term.cyan("Please enter a password: "))
                     if new_password != '':
-                        print("Password accepted!\nNew user created!") 
+                        print(term.green("Password accepted!\nNew user created!"))
                         worksheet.append_row(['Password:', new_password])
                         worksheet.append_row(['Task Name', 'Status'],)
                         worksheet.format('A2:B2', {'textFormat': {'bold': True}})
@@ -173,12 +183,12 @@ def check_user(user):
                         break
                         
                     else:
-                        print('Enter at least a single character to continue.')
+                        print(term.red('Enter at least a single character to continue.'))
                         continue
 
                 break
             else:
-                print("Invalid input. Please enter 'y' or 'n'.")
+                print(term.black_on_red_bold("Invalid input. Please enter 'y' or 'n'."))
 
 
 def menu(user):
@@ -186,9 +196,11 @@ def menu(user):
     Display the menu and call the appropriate function
     """
     while True:
-        
         options = ["1. Display Tasks", "2. Add Task", "3. Mark Task as Complete", "4. Delete Task", "5. Quit"]
-        terminal_menu = TerminalMenu(options, title= "\nEnter your choice:\n")
+        terminal_menu = TerminalMenu(options, 
+                                     title=("\nEnter your choice:\n"), 
+                                     menu_cursor = (None), 
+                                     menu_highlight_style=("bg_cyan","fg_black"))
         menu_entry_index = terminal_menu.show()
 
         worksheet = SHEET.worksheet(user)
@@ -202,10 +214,10 @@ def menu(user):
             delete_task(worksheet, user)
         elif options[menu_entry_index] == "5. Quit":
             clear()
-            print("\nThank you for using the Task Manager!\n\nGoodbye!!!\n")
+            print(term.black_on_cyan_bold("\nThank you for using the Task Manager!\n\nGoodbye!!!\n"))
             exit()
         else:
-            print("Invalid choice. Please choose a valid option.")
+            print(term.red("Invalid choice. Please choose a valid option."))
 
 def clear():
     """
@@ -218,8 +230,8 @@ def main():
     """
     Run all program functions
     """
-
-    print("\nWelcome to Task Manager!\n")
+    clear()
+    print(term.black_on_cyan_bold("\nWelcome to Task Manager!\n"))
     user = initial_input()
     check_user(user)
     menu(user)
