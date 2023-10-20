@@ -13,8 +13,6 @@
 
 ![flowchart](assets/images/flowchart.png)
 
-ADD CHART!!!!!
-
 ## How to use
 ------
 Through the progression of the app, the user will go through the following:
@@ -35,7 +33,7 @@ Through the progression of the app, the user will go through the following:
 ### Welcome message and LogIn
 - Here the user can enter the user name and the password
 
-![Login](/assets/image/login.png)
+![Login](assets/images/login.png)
 - The app will then check with the spreadsheet where all the users and passwords are stored.
 
 ![Have a user name or forgot user name](assets/images/have_or_forgot_username.png)
