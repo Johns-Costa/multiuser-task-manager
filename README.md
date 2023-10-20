@@ -63,6 +63,10 @@ Through the progression of the app, the user will go through the following:
 ![Mark Task as Complete](assets/images/mark_task_complete.png)
 - A list of all the tasks is shown and the option to sellect which task to mark as complete is offered. When a task is selected there is a confirmation message that the task was marked as done.
 
+### Edit Task
+![Edit Task](assets/images/edit_menu.png)
+- A list of all the tasks is shown and the option to sellect which task to edit. Followed by an input the write the edited task name. When the task is edited there is a confirmation message that the task was successfully edited.
+
 ### Delete Task 
 ![Delete Task](assets/images/delete_task.png)
 - A list of all the tasks is shown and the option to sellect which task to delete is offered. When a task is selected there is a confirmation message that the tasks was deleted.
@@ -85,10 +89,12 @@ MAKE THE TABLE!!!!
 ## Testing
 ------
 ### CI PEP8 Python Linter
-- I checked all of my Python code through the Code Institute Python Linter, which came back all clear.
+- I checked all of my Python code through the Code Institute Python Linter, which came back with one message "222: E722 do not use bare 'except'". This except has to be bare in order for the code to run.
 
-![CI python linter pass](/assets/documentation/images.webp/python-linter-clear.webp)
+![CI python linter](assets/images/python-linter.png)
 
+------
+### For Manual Testing details, visit [Testing](/TESTING.md) page.
 ------
 
 
