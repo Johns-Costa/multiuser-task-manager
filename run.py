@@ -42,7 +42,7 @@ def add_task(user):
     """
     print(term.black_on_darkkhaki(term.center("Note: type 'exit' to go back to the menu")))
     name = input(term.cyan("\nEnter task name: "))
-    if "exit":
+    if name == "exit":
         clear()
         menu(user) 
     else:
@@ -50,7 +50,7 @@ def add_task(user):
         data = [name, status]
         worksheet_to_update = SHEET.worksheet(user)
         worksheet_to_update.append_row(data)
-        print(f"Task '{name}' added.")
+        print(term.green(f"Task '{name}' added."))
 
 def mark_complete(worksheet, user):
     """
@@ -66,18 +66,18 @@ def mark_complete(worksheet, user):
         menu(user)
     else:
         try:
-            index = int(choice) - 1
-            if 0 <= index > len(all_values):
-                row = index + 3
+            index = int(choice)
+            if 0 <= index < (len(all_values)-1):
+                row = index + 2
                 worksheet.update_cell(row, 2, 'Done')
                 print(term.white_on_green("Task marked as complete."))
             else:
                 print(term.red("Invalid task number."))
-                time.sleep(1) 
+                time.sleep(2) 
                 mark_complete(worksheet, user)
         except ValueError:
             print(term.red("Invalid input. Please enter a valid task number."))
-            time.sleep(1) 
+            time.sleep(2) 
             mark_complete(worksheet, user)
 
 def delete_task(worksheet, user):
@@ -103,11 +103,11 @@ def delete_task(worksheet, user):
                 print(term.white_on_green(f"Task '{deleted_task[0]}' deleted."))
             else:
                 print(term.red("Invalid task number."))
-                time.sleep(1)
+                time.sleep(2)
                 delete_task(worksheet, user)
         except ValueError:
             print(term.red("Invalid input. Please enter a valid task number."))
-            time.sleep(1)
+            time.sleep(2)
             delete_task(worksheet, user)
 
 def initial_input():
@@ -196,7 +196,7 @@ def menu(user):
     Display the menu and call the appropriate function
     """
     while True:
-        options = ["1. Display Tasks", "2. Add Task", "3. Mark Task as Complete", "4. Delete Task", "5. Quit"]
+        options = [" Display Tasks ", " Add Task ", " Mark Task as Complete ", " Delete Task ", " Quit "]
         terminal_menu = TerminalMenu(options, 
                                      title=("\nEnter your choice:\n"), 
                                      menu_cursor = (None), 
@@ -204,15 +204,15 @@ def menu(user):
         menu_entry_index = terminal_menu.show()
 
         worksheet = SHEET.worksheet(user)
-        if options[menu_entry_index] == "1. Display Tasks":
+        if options[menu_entry_index] == " Display Tasks ":
             display_tasks(worksheet)
-        elif options[menu_entry_index] == "2. Add Task":
+        elif options[menu_entry_index] == " Add Task ":
             add_task(user)
-        elif options[menu_entry_index] == "3. Mark Task as Complete":
+        elif options[menu_entry_index] == " Mark Task as Complete ":
             mark_complete(worksheet, user)
-        elif options[menu_entry_index] == "4. Delete Task":
+        elif options[menu_entry_index] == " Delete Task ":
             delete_task(worksheet, user)
-        elif options[menu_entry_index] == "5. Quit":
+        elif options[menu_entry_index] == " Quit ":
             clear()
             print(term.black_on_cyan_bold("\nThank you for using the Task Manager!\n\nGoodbye!!!\n"))
             exit()
