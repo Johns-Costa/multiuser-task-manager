@@ -97,6 +97,54 @@ MAKE THE TABLE!!!!
 ### For Manual Testing details, visit [Testing](/TESTING.md) page.
 ------
 
+### Bugs
+
+- **Problem 1**: At first I tried to make the app with google docs but it wasn't working properly. 
+- ***Solution 1***: I changed it to googlesheets which was much more versatile and it started working.
+- **Problem 2**: For a while the delete function was deleting the above task of what it was asked to do.
+- ***Solution 2***: I changed targeted row by adding "1" and it fixed the problem.
+- **Problem 3**: After installing simple_term_menu, the deployed version stopped working.
+- ***Solution 3***: I updated the requirements and it started working.
+- **Problem 4**: The add_task() was accepting empty strings wich would lead to an empty task.
+- ***Solution 4***: I added an if statement to make it not accept empty strings.
+
+### Unfixed Bugs
+
+- None
+
+## Mistakes
+------
+
+Mistake: I made a few of my git commits too long, by a few characters. 
+- *Solution: Commit more often, with fewer changes to cover in a commit message* 
+
+## Python Libraries Used and Why?
+------
+- `gspread`: I used gspread to access Google spreadsheets, where the data is being stored for this application. It is a library with useful data manipulation functions and allows us to access Google Sheets.
+- `google-auth`: I used the Google Auth library to handle the Credentials for the API calls between the application and google sheets.
+- `blessed`: I used blessed to give some color to the app and make it more appealing to the user
+- `time`: I used time functions from the inbuild Python library to delay some function calls within the application. For example, when the user enters an input that causes an error, the application prints the reason why and then pauses for a few seconds before performing the function again. It enhances a good user experience.
+- `simple_term_menu`: I used the simple_term_menu to make a multi-choice menu where the options can be selected by using the up and down arrows instead of using commands. This makes the app easier to use.
+- `os`: I used "os" to make a simple function that would clean the terminal when necessary to prevent clutter.
+
+
+## Credits 
+------
+### **Code**
+Code credits are commented within the code, with a respective number referencing the numbers below.
+
+1. Code Institute for the deployment terminal templates.
+
+2. My mentor Alex was crutial in his support throughout this project, making suggestions and giving ideas that made this app way better.
+
+### Helpsheets and Learning Resources
+
+- [Blessed Documentation](https://blessed.readthedocs.io/en/stable/intro.html)
+- [Gspread documentation](https://docs.gspread.org/en/latest/user-guide.html#)
+- [Simple term menu documentation](https://pypi.org/project/simple-term-menu/)
+
+
+
 
 
 
