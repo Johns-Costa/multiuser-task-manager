@@ -70,7 +70,7 @@ Through the progression of the app, the user will go through the following:
 - A list of all the tasks is shown and the option to sellect which task to delete is offered. When a task is selected there is a confirmation message that the tasks was deleted.
 
 ### Quit
-![Quit](assets/images/delete_task.png)
+![Quit](assets/images/quit.png)
 - A thank you message and a goodbye greetting is displayed. The app is closed.
 
 ### Input Validation

@@ -8,7 +8,7 @@ Testing is carried out throughout the development of the project. This is often 
 ### Input Validation
 Every input in the application needs to have input validation, to check the user input is the correct data type and within the range expected for the tasks being registered. Below is a table of the requirements that each input need for correct validation. All inputs will loop, often using a `while` loop with `try`, `except` and `else` statements following. If they do not use a `while` loop, an `if`/`elif`/`else` statement(s) is(/are) used in the code instead. 
 
-| Function | data required | accepts | doen't accept | commets |
+| Function | data required | accepts | doesn't accept | commets |
 | --- | --- | --- | --- | --- |
 | initial_input | strings | strings | Empty strings| - |
 | check_user | strings | strings both for password and for user name | Empty strings/wrong user name/wrong password | creates new user name if new to the app |
@@ -19,7 +19,7 @@ Every input in the application needs to have input validation, to check the user
 |  edit_task | Integer and then string  | whole number and then string | first strings and then empty string | changes a task name |
 |  delete_task | Integer | Whole number | strings or numbers above the number os tasks | deletes task |
 
-Every input unaccepted input will send a specific error message explaing what was wrong. examples:
+Every unaccepted input will send a specific error message explaing what was wrong. examples:
  - Invalid task number.
  - Invalid input. Please enter a valid task number.
  - Enter at least a single character to continue.
