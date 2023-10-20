@@ -11,7 +11,7 @@
 - I was inspired to make a task manager app from feeling the need of self organization. After some thought it came to my mind it would be much more usefull to make an app that could host several users. Each user having their own login it their specific tasks. I wanted to create an application that provided each user a confortable place to store their task list, be safe and accessible from anywhere with an internet connection.
 - Below is the flowchart I created as a guide when I was first visualising how the code would be represented.
 
-![flowchart](/assets/documentation/images.webp/flowchart.webp)
+![flowchart](assets/images/flowchart.png)
 
 ADD CHART!!!!!
 
@@ -129,7 +129,6 @@ Mistake: I made a few of my git commits too long, by a few characters.
 ## Credits 
 ------
 ### **Code**
-Code credits are commented within the code, with a respective number referencing the numbers below.
 
 1. Code Institute for the deployment terminal templates.
 
