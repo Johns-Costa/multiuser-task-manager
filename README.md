@@ -77,9 +77,7 @@ Through the progression of the app, the user will go through the following:
 
 ### Input Validation
 - All inputs have input validators, which ask the user for either a string, or "y" or "n", or an integer (whole number). 
-- Please see [Testing](/TESTING.md) page for more detailed explanation of this.
-
-MAKE THE TABLE!!!!
+- Please see [Testing](TESTING.md) page for more detailed explanation of this.
 
 ### Potential Future Features
 
@@ -94,7 +92,7 @@ MAKE THE TABLE!!!!
 ![CI python linter](assets/images/python-linter.png)
 
 ------
-### For Manual Testing details, visit [Testing](/TESTING.md) page.
+### For Manual Testing details, visit [Testing](TESTING.md) page.
 ------
 
 ### Bugs
