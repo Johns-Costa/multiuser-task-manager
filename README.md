@@ -98,7 +98,7 @@ NOTE: I created 5 mock user names that can me accessed and changed in order for 
 ## Testing
 ------
 ### CI PEP8 Python Linter
-- I checked all of my Python code through the Code Institute Python Linter, which came back with one message "222: E722 do not use bare 'except'". This except has to be bare in order for the code to run.
+- I checked all of my Python code through the [Code Institute Python Linter](https://pep8ci.herokuapp.com/), which came back with one message "222: E722 do not use bare 'except'". This except has to be bare in order for the code to run.
 
 ![CI python linter](assets/images/python-linter.png)
 
