@@ -276,7 +276,7 @@ def menu(user):
     while True:
         options = [" Display Tasks ",
                    " Add Task ", " Mark Task as Complete ",
-                   " Edit task ", " Delete Task ", " Quit "]
+                   " Edit Task ", " Delete Task ", " Quit "]
         terminal_menu = TerminalMenu(options,
                                      title=("\nEnter your choice:\n"),
                                      menu_cursor=(None),
@@ -291,7 +291,7 @@ def menu(user):
             add_task(user)
         elif options[menu_entry_index] == " Mark Task as Complete ":
             mark_complete(worksheet, user)
-        elif options[menu_entry_index] == " Edit task ":
+        elif options[menu_entry_index] == " Edit Task ":
             edit_task(worksheet, user)
         elif options[menu_entry_index] == " Delete Task ":
             delete_task(worksheet, user)

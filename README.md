@@ -23,9 +23,22 @@ Through the progression of the app, the user will go through the following:
   - Display Tasks 
   - Add Task 
   - Mark Task as Complete
+  - Edit Task
   - Delete Task
   - Quit 
 - Through this self explanatory simple menu, the user will be alble to manage all the tasks they need.
+- The app is connected to the google sheets where the data is stored and edited.
+
+NOTE: I created 5 mock user names that can me accessed and changed in order for anyone to explore and learn to work with the app. Here are their user names and passwords:
+
+| User Name | Password |
+| -----| ----- |
+| Alice | try13 |
+| Bob | try14 |
+| Carol | try15 |
+| David | try16 |
+| Emily | try17 |
+
 
 ## Features 
 ------
@@ -149,8 +162,8 @@ The application was deployed to [Heroku](https://www.heroku.com/) and can be acc
     - value: `8000`
     ----
     - key: `CREDS`
-    - value: copied and paste the content of the creds.json file
-    Note: The content in the creds.json file is private, so it wont be shared.
+    - value: copied and pasted the content of the `creds.jso` file
+      - Note: The content in the creds.json file is private, so it wont be shared.
 
 9. At the "Buildpacks" section, click on the "Add" button and choose:
 
@@ -170,7 +183,7 @@ The application was deployed to [Heroku](https://www.heroku.com/) and can be acc
 
 15. Enable automatic deployment
 
-16. The app can now accessed by pressing the `open app` button or throu the link found in the settings, in the domain section.[Multi User Task Manager](https://python-algorithm-visualizer.onrender.com/)
+16. The app can now accessed by pressing the `open app` button or through the link found in the settings, in the domain section. [Multi User Task Manager](https://python-algorithm-visualizer.onrender.com/)
 
 
 

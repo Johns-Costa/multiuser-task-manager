@@ -19,7 +19,7 @@ Every input in the application needs to have input validation, to check the user
 |  edit_task | Integer and then string  | whole number and then string | first strings and then empty string | changes a task name |
 |  delete_task | Integer | Whole number | strings or numbers above the number os tasks | deletes task |
 
-Every unaccepted input will send a specific error message explaing what was wrong. examples:
+Every unaccepted input will send a specific error message explaing what was wrong. Examples:
  - Invalid task number.
  - Invalid input. Please enter a valid task number.
  - Enter at least a single character to continue.
