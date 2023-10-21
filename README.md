@@ -123,6 +123,56 @@ Mistake: I made a few of my git commits too long, by a few characters.
 - `simple_term_menu`: I used the simple_term_menu to make a multi-choice menu where the options can be selected by using the up and down arrows instead of using commands. This makes the app easier to use.
 - `os`: I used "os" to make a simple function that would clean the terminal when necessary to prevent clutter.
 
+### Deployment
+
+The application was deployed to [Heroku](https://www.heroku.com/) and can be accessed from the following link: [Multi User Task Manager](https://python-algorithm-visualizer.onrender.com/)
+
+#### Heroku deployment
+
+1. Create a Heroku account if you don't have one.
+
+2. In the dashboard, go to the "Apps" tab.
+
+3. Click on the "New" button and choose "Create a new app".
+
+4. Enter a name for the app.
+
+5. Choose a region.
+
+6. Click on the "Create" button.
+
+7. Open the app you created and go to the "Settings" tab.
+
+8. At the "Config Vars" section, click on the "Add" button and enter the following:
+
+    - key: `PORT`
+    - value: `8000`
+    ----
+    - key: `CREDS`
+    - value: copied and paste the content of the creds.json file
+    Note: The content in the creds.json file is private, so it wont be shared.
+
+9. At the "Buildpacks" section, click on the "Add" button and choose:
+
+    - Python
+    - Node.js
+    The order of the buildpacks is important.
+
+10. After that, click on the "Deploy" tab.
+
+11. At the "Deployment method" section, choose GitHub and connect your GitHub account.
+
+12. Then, you need to choose the repository you want to deploy.
+
+13. Go down to the "Manual deploy" section, choose the branch you want to deploy, and click on the "Deploy branch" button.
+
+14. The application will be deployed to Heroku. You can access it by clicking on the "View" button.
+
+15. Enable automatic deployment
+
+16. The app can now accessed by pressing the `open app` button or throu the link found in the settings, in the domain section.[Multi User Task Manager](https://python-algorithm-visualizer.onrender.com/)
+
+
 
 ## Credits 
 ------
